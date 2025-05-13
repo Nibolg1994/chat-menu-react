@@ -9,6 +9,8 @@
   "dependencies": {
     "@iconify/react": "^6.0.0",
     "autoprefixer": "^10.4.15",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.507.0",
     "postcss": "^8.4.31",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
