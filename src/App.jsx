@@ -3,7 +3,7 @@ import DishCard from "./components/DishCard";
 import CategorySlider from "./components/CategorySlider";
 import CategoryToggle from "./components/CategoryToggle";
 
-const categories = ["Пицца", "Суши", "Гриль", "Напитки", "Десерты"];
+const categories = ["Пицца", "Суши", "Гриль", "Напитки", "Десерты", ];
 
 const dishes = [
     {
