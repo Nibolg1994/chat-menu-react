@@ -3,7 +3,25 @@ import DishCard from "./components/DishCard";
 import CategorySlider from "./components/CategorySlider";
 import CategoryToggle from "./components/CategoryToggle";
 
-const categories = ["Пицца", "Суши", "Гриль", "Напитки", "Десерты", ];
+/*const categories = [
+
+    "Пицца", "Суши", "Гриль", "Напитки", "Десерты",
+];*/
+
+const categories = [
+    { label: "Бургеры", icon: "burgers" },
+    { label: "Салаты", icon: "salads" },
+    { label: "Десерты", icon: "desserts" },
+    { label: "Бургеры", icon: "burgers" },
+    { label: "Салаты", icon: "salads" },
+    { label: "Десерты", icon: "desserts" },
+    { label: "Бургеры", icon: "burgers" },
+    { label: "Салаты", icon: "salads" },
+    { label: "Десерты", icon: "desserts" },
+    { label: "Бургеры", icon: "burgers" },
+    { label: "Салаты", icon: "salads" },
+    { label: "Десерты", icon: "desserts" },
+];
 
 const dishes = [
     {

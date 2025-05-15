@@ -1,6 +1,7 @@
 import React from "react";
 import { Utensils, Leaf, IceCream } from "lucide-react"; // или заменишь на свои SVG/иконки
 import clsx from "clsx";
+import IconCategory from "./IconCategory.jsx";
 
 const iconMap = {
     burgers: <Utensils size={28} />,
@@ -14,10 +15,15 @@ function CategoryCard({ label, selected, icon, onClick }) {
             onClick={onClick}
             className={clsx(
                 "flex flex-col items-center justify-center w-24 h-24 rounded-xl px-2 py-3 transition",
-                selected ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                "bg-gray-50 border shadow-md",
+                selected
+                    ? "border-blue-600 text-blue-600"
+                    : "border-gray-200 text-gray-800 hover:border-gray-300 hover:shadow-lg hover:scale-110 hover:text-blue-500"
             )}
         >
-            <div className="mb-1">{iconMap[icon]}</div>
+            <div className="mb-1">
+                <IconCategory name={icon} className="w-12 h-12"/>
+            </div>
             <span className="text-sm font-medium">{label}</span>
         </button>
     );
