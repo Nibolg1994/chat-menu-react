@@ -14,7 +14,7 @@ function CategoryCard({ label, selected, icon, onClick }) {
         <button
             onClick={onClick}
             className={clsx(
-                "flex flex-col items-center justify-center w-24 h-24 rounded-xl px-2 py-3 transition",
+                "flex flex-col items-center justify-center w-20 h-20 rounded-xl px-2 py-3 transition",
                 "bg-gray-50 border shadow-md",
                 selected
                     ? "border-blue-600 text-blue-600"
@@ -22,7 +22,7 @@ function CategoryCard({ label, selected, icon, onClick }) {
             )}
         >
             <div className="mb-1">
-                <IconCategory name={icon} className="w-12 h-12"/>
+                <IconCategory name={icon} className="w-8 h-8"/>
             </div>
             <span className="text-sm font-medium">{label}</span>
         </button>
