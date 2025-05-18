@@ -28,20 +28,27 @@ const dishes = [
         title: "Маргарита",
         description: "Традиционная пицца с томатным соусом и сыром моцарелла",
         price: 450,
-        image: "/images/margarita.jpg",
-        category: "Пицца",
+        image: "src/images/margarita.png",
+        category: "Салаты",
     },
     {
         title: "Калифорния",
         description: "Ролл с крабом, огурцом и авокадо",
         price: 390,
-        image: "/images/california.jpg",
-        category: "Суши",
+        image: "src/images/margarita.png",
+        category: "Салаты",
+    },
+    {
+        title: "Индия",
+        description: "Ролл с крабом, огурцом и авокадо",
+        price: 390,
+        image: "src/images/margarita.png",
+        category: "Салаты",
     },
 ];
 
 const App = () => {
-    const [selectedCategory, setSelectedCategory] = useState("Пицца");
+    const [selectedCategory, setSelectedCategory] = useState("Салаты");
     const [openCategories, setOpenCategories] = useState(true);
 
     const filtered = dishes.filter((d) => d.category === selectedCategory);
@@ -50,7 +57,7 @@ const App = () => {
         <div className="min-h-screen bg-gray-100 p-2">
             <div className="flex justify-between items-center mb-2">
                 <div className="flex-1 text-center">
-                    <h1 className="text-xl font-bold">Меню</h1>
+                    <h1 className="text-xl font-medium font-inter">Меню</h1>
                 </div>
               {/*  <CategoryToggle
                     isOpen={openCategories}
@@ -66,7 +73,7 @@ const App = () => {
                 />
             )}
 
-            <div className="mt-4 flex gap-4 overflow-x-auto px-2">
+            <div className="mt-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 xs:px-2 sm:px-2" >
                 {filtered.map((dish, i) => (
                     <DishCard key={i} {...dish} />
                 ))}
