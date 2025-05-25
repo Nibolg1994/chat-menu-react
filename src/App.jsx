@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DishCard from "./components/DishCard";
 import CategorySlider from "./components/CategorySlider";
 import CategoryToggle from "./components/CategoryToggle";
+import CompactBottomBar from "./components/ComapctBottomBar.jsx";
 
 /*const categories = [
 
@@ -73,11 +74,25 @@ const App = () => {
                 />
             )}
 
-            <div className="mt-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 xs:px-2 sm:px-2" >
+            <div className="mt-4 mb-24 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 xs:px-2 sm:px-2" >
                 {filtered.map((dish, i) => (
-                    <DishCard key={i} {...dish} />
+                    <DishCard
+                        title={dish.title}
+                        description={dish.description}
+                        price={dish.price}
+                        image={dish.image}
+                        onViewDetails={() => console.log('onViewDetails')}
+                        onAddToCart={() => console.log('onAddToCart')}
+                        cartQuantity={1} // функция возвращает кол-во блюда в корзине
+                    />
                 ))}
             </div>
+
+            <CompactBottomBar
+                totalItems={1}
+                totalPrice={2}
+                onClick={() => console.log("Переход в корзину")}
+            />
         </div>
     );
 };

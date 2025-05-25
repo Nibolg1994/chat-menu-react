@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
       },
+      colors: {
+        brandBlue: '#5688b6'
+      },
     },
     screens: {
       xs: "400px", // 👈 добавляем пользовательский брейкпоинт
