@@ -4,6 +4,8 @@ import CategorySlider from "./components/CategorySlider";
 import CategoryToggle from "./components/CategoryToggle";
 import CompactBottomBar from "./components/ComapctBottomBar.jsx";
 import {useNavigate} from "react-router-dom";
+import UserStatusBadge from "./components/UserStatusBadge";
+import Header from "./components/Header";
 
 /*const categories = [
 
@@ -58,15 +60,12 @@ const MainPage = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 p-2">
-            <div className="flex justify-between items-center mb-2">
-                <div className="flex-1 text-center">
-                    <h1 className="text-xl font-medium font-inter">Меню</h1>
-                </div>
-              {/*  <CategoryToggle
-                    isOpen={openCategories}
-                    onClick={() => setOpenCategories((prev) => !prev)}
-                />*/}
-            </div>
+            <Header
+                userStatus="Морской гурман"
+                city="Севастополь"
+                workingHours="10:00–22:00"
+            />
+
 
             {openCategories && (
                 <CategorySlider
