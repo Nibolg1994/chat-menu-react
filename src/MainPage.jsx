@@ -6,6 +6,7 @@ import CompactBottomBar from "./components/ComapctBottomBar.jsx";
 import {useNavigate} from "react-router-dom";
 import UserStatusBadge from "./components/UserStatusBadge";
 import Header from "./components/Header";
+import {useCart} from "./context/CartContext.jsx";
 
 /*const categories = [
 
@@ -58,6 +59,7 @@ const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("Салаты");
     const [openCategories, setOpenCategories] = useState(true);
     const navigate = useNavigate();
+    const cart = useCart();
 
     const filtered = dishes.filter((d) => d.category === selectedCategory);
 
@@ -93,11 +95,13 @@ const MainPage = () => {
                 ))}
             </div>
 
-            <CompactBottomBar
-                totalItems={1}
-                totalPrice={2}
-                onClick={() => console.log("Переход в корзину")}
-            />
+            {cart.cartItems.length > 0 &&
+                <CompactBottomBar
+                    totalItems={cart.cartItems.length}
+                    totalPrice={cart.totalPrice}
+                    onClick={() => console.log("Переход в корзину")}
+                />
+            }
         </div>
     );
 };
