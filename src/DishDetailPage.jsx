@@ -2,17 +2,16 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus } from "lucide-react";
 import PrimaryButton from "./components/PrimaryButton.jsx";
+import {useCart} from "./context/CartContext.jsx";
 
 const DishDetailPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dish = location.state?.dish;
+    const { addItem } = useCart();
 
     if (!dish) return <div className="p-4">Блюдо не найдено</div>;
 
-    const handleAddToCart = () => {
-        console.log("Добавлено в корзину:", dish.title);
-    };
 
     return (
         <div className="relative min-h-screen bg-white text-gray-800">
@@ -57,7 +56,7 @@ const DishDetailPage = () => {
                 </div>
 
                 <PrimaryButton
-                    onClick={handleAddToCart}
+                    onClick={() => addItem(dish)}
                     className="w-full flex items-center justify-center gap-2 py-3 text-base"
                 >
                     <Plus size={18} />
