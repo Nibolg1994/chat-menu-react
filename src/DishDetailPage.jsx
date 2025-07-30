@@ -8,7 +8,7 @@ const DishDetailPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dish = location.state?.dish;
-    const { addItem } = useCart();
+    const { addItem, cartItems } = useCart();
 
     if (!dish) return <div className="p-4">Блюдо не найдено</div>;
 
@@ -62,7 +62,7 @@ const DishDetailPage = () => {
                     <Plus size={18} />
                     Добавить в корзину
                     <span className="ml-2 bg-white/20 rounded px-2 text-sm">
-                        1
+                        {cartItems.length}
                     </span>
                 </PrimaryButton>
             </div>
