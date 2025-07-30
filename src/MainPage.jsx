@@ -29,6 +29,7 @@ const categories = [
 
 const dishes = [
     {
+        id: 1,
         title: "Маргарита",
         description: "Традиционная пицца с томатным соусом и сыром моцарелла",
         price: 450,
@@ -36,6 +37,7 @@ const dishes = [
         category: "Салаты",
     },
     {
+        id: 2,
         title: "Калифорния",
         description: "Ролл с крабом, огурцом и авокадо",
         price: 390,
@@ -43,6 +45,7 @@ const dishes = [
         category: "Салаты",
     },
     {
+        id: 3,
         title: "Индия",
         description: "Ролл с крабом, огурцом и авокадо",
         price: 390,
@@ -79,12 +82,12 @@ const MainPage = () => {
                 {filtered.map((dish, i) => (
                     <DishCard
                         key={i}
+                        id={dish.id}
                         title={dish.title}
                         description={dish.description}
                         price={dish.price}
                         image={dish.image}
                         onViewDetails={() => navigate("/dish", { state: { dish } })}
-                        onAddToCart={() => console.log('onAddToCart')}
                         cartQuantity={1} // функция возвращает кол-во блюда в корзине
                     />
                 ))}

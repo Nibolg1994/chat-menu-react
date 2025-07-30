@@ -1,8 +1,11 @@
 import React from "react";
 import PrimaryButton from "./PrimaryButton.jsx";
 import { ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const CompactBottomBar = ({ totalItems, totalPrice, onClick }) => {
+const CompactBottomBar = ({ totalItems, totalPrice }) => {
+    const navigate = useNavigate();
+
     if (totalItems === 0) return null;
 
     return (
@@ -21,10 +24,7 @@ const CompactBottomBar = ({ totalItems, totalPrice, onClick }) => {
                 {/* Кнопка перехода */}
                 <PrimaryButton
                     className="w-full xs:w-auto flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg transition"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onClick();
-                    }}
+                    onClick={() => navigate("/cart")}
                 >
                     <ShoppingCart size={18} />
                     Перейти в корзину

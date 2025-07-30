@@ -2,16 +2,18 @@ import { Plus } from "lucide-react";
 import React from "react";
 import clsx from "clsx";
 import PrimaryButton from "./PrimaryButton";
+import { useCart } from "../context/CartContext";
 
 const DishCard = ({
+                      id,
                       title,
                       description,
                       price,
                       image,
                       onViewDetails,
-                      onAddToCart,
                       cartQuantity = 0,
                   }) => {
+    const { addItem } = useCart();
     return (
         <div
             className="relative bg-white rounded-2xl border border-gray-300 shadow-sm hover:shadow-md transition overflow-hidden group cursor-pointer"
@@ -43,7 +45,7 @@ const DishCard = ({
                         )}
                         onClick={(e) => {
                             e.stopPropagation();
-                            onAddToCart();
+                            addItem({id, title, price, image })
                         }}
                     >
                         <Plus size={20} />
