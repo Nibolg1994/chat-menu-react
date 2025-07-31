@@ -2,11 +2,14 @@ import React from "react";
 import PrimaryButton from "./PrimaryButton.jsx";
 import { ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {useCart} from "../context/CartContext.jsx";
 
-const CompactBottomBar = ({ totalItems, totalPrice }) => {
+const CompactBottomBar = () => {
     const navigate = useNavigate();
-
+    const { totalItems, totalPrice } = useCart();
     if (totalItems === 0) return null;
+
+
 
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-2px_12px_rgba(0,0,0,0.08)] px-4 py-4">

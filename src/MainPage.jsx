@@ -96,11 +96,7 @@ const MainPage = () => {
             </div>
 
             {cart.cartItems.length > 0 &&
-                <CompactBottomBar
-                    totalItems={cart.cartItems.length}
-                    totalPrice={cart.totalPrice}
-                    onClick={() => console.log("Переход в корзину")}
-                />
+                <CompactBottomBar/>
             }
         </div>
     );
