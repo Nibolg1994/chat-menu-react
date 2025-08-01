@@ -5,6 +5,7 @@ import MainPage from "./MainPage.jsx";
 import OrderPage from "./OrderPage.jsx";
 import CardPage from "./CardPage.jsx"; // <-- импорт MainPage
 import { CartProvider } from "./context/CartContext";
+import ReservationPage from "./ReservationPage.jsx";
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
                 <Route path="/dish" element={<DishDetailPage />} />
                 <Route path="/order" element={<OrderPage />} />
                 <Route path="/cart" element={<CardPage />} />
+                <Route path="/reservation" element={<ReservationPage />} />
             </Routes>
         </CartProvider>
     );

@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import UserStatusBadge from "./components/UserStatusBadge";
 import Header from "./components/Header";
 import {useCart} from "./context/CartContext.jsx";
+import PrimaryButton from "./components/PrimaryButton.jsx";
 
 /*const categories = [
 
@@ -70,6 +71,16 @@ const MainPage = () => {
                 city="Севастополь"
                 workingHours="10:00–22:00"
             />
+            <div className="px-4 pt-4">
+
+                <PrimaryButton
+                    onClick={() => navigate("/reservation")}
+                    className="w-full text-sm font-medium py-3 flex items-center justify-center gap-2"
+                >
+                    <span role="img" aria-label="calendar">📅</span>
+                    Бесплатное бронирование столика
+                </PrimaryButton>
+            </div>
 
 
             {openCategories && (
@@ -80,7 +91,8 @@ const MainPage = () => {
                 />
             )}
 
-            <div className="mt-4 mb-24 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 xs:px-2 sm:px-2" >
+            <div
+                className="mt-4 mb-24 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 xs:px-2 sm:px-2">
                 {filtered.map((dish, i) => (
                     <DishCard
                         key={i}
@@ -89,7 +101,7 @@ const MainPage = () => {
                         description={dish.description}
                         price={dish.price}
                         image={dish.image}
-                        onViewDetails={() => navigate("/dish", { state: { dish } })}
+                        onViewDetails={() => navigate("/dish", {state: {dish}})}
                         cartQuantity={1} // функция возвращает кол-во блюда в корзине
                     />
                 ))}
