@@ -34,7 +34,7 @@ const CartPage = () => {
                 <div className="flex items-center gap-3 mb-5">
                     <button
                         onClick={() => navigate("/")}
-                        className="bg-white p-2 rounded-full shadow hover:bg-gray-100 transition"
+                        className="bg-white p-2.5 rounded-full shadow-md hover:bg-gray-100 transition"
                     >
                         <ArrowLeft size={20} />
                     </button>

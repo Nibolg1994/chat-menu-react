@@ -19,7 +19,7 @@ const DishDetailPage = () => {
             <div className="absolute top-4 left-4 z-10">
                 <button
                     onClick={() => navigate(-1)}
-                    className="bg-white/80 backdrop-blur p-2.5 rounded-lg shadow hover:scale-105 transition"
+                    className="bg-white p-2.5 rounded-full shadow-md hover:bg-gray-100 transition"
                 >
                     <ArrowLeft size={22} />
                 </button>
