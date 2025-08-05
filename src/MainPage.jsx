@@ -1,35 +1,20 @@
 import React, { useState } from "react";
 import DishCard from "./components/DishCard";
 import CategorySlider from "./components/CategorySlider";
-import CategoryToggle from "./components/CategoryToggle";
 import CompactBottomBar from "./components/ComapctBottomBar.jsx";
 import {useNavigate} from "react-router-dom";
 import UserStatusBadge from "./components/UserStatusBadge";
 import Header from "./components/Header";
 import {useCart} from "./context/CartContext.jsx";
 import PrimaryButton from "./components/PrimaryButton.jsx";
+import {useRestaurant} from "./context/RestaurantContext.jsx";
 
 /*const categories = [
 
     "Пицца", "Суши", "Гриль", "Напитки", "Десерты",
 ];*/
 
-const categories = [
-    { label: "Бургеры", icon: "burgers" },
-    { label: "Салаты", icon: "salads" },
-    { label: "Десерты", icon: "desserts" },
-    { label: "Бургеры", icon: "burgers" },
-    { label: "Салаты", icon: "salads" },
-    { label: "Десерты", icon: "desserts" },
-    { label: "Бургеры", icon: "burgers" },
-    { label: "Салаты", icon: "salads" },
-    { label: "Десерты", icon: "desserts" },
-    { label: "Бургеры", icon: "burgers" },
-    { label: "Салаты", icon: "salads" },
-    { label: "Десерты", icon: "desserts" },
-];
-
-const dishes = [
+/*const dishes = [
     {
         id: 1,
         title: "Маргарита",
@@ -54,15 +39,20 @@ const dishes = [
         image: "src/images/margarita.png",
         category: "Салаты",
     },
-];
+];*/
 
 const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("Салаты");
     const [openCategories, setOpenCategories] = useState(true);
+    const { menu, categories, loading } = useRestaurant();
     const navigate = useNavigate();
     const cart = useCart();
+    const dishes = menu
 
-    const filtered = dishes.filter((d) => d.category === selectedCategory);
+    if (loading) return <p>Загрузка меню...</p>;
+    if (!menu.length || !categories.length) return <p>Меню недоступно</p>;
+
+    const filtered = dishes.filter((d) => d.category.toLowerCase() === selectedCategory);
 
     return (
         <div className="min-h-screen bg-gray-100 p-2">
@@ -87,7 +77,7 @@ const MainPage = () => {
                 <CategorySlider
                     categories={categories}
                     selected={selectedCategory}
-                    onSelect={setSelectedCategory}
+                    onSelect={(cat) => setSelectedCategory(cat.title.toLowerCase())}
                 />
             )}
 

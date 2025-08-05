@@ -28,9 +28,13 @@ export const RestaurantProvider = ({ slug, children }) => {
                     ? data.menu.filter(item => item.id && item.title)
                     : [];
 
+                console.log('Valid menu items:', JSON.stringify(validMenu));
+
                 const validCategories = Array.isArray(data.categories)
                     ? data.categories.filter(cat => cat.id && cat.title)
                     : [];
+
+                console.log('Valid categories:', JSON.stringify(validCategories));
 
                 setRestaurant({
                     id: data.id,
@@ -58,4 +62,4 @@ export const RestaurantProvider = ({ slug, children }) => {
     );
 };
 
-export const useRestaurant = (restaurantId) => useContext(RestaurantContext);
+export const useRestaurant = () => useContext(RestaurantContext);

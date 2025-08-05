@@ -24,7 +24,7 @@ const CategorySlider = ({ categories, selected, onSelect }) => {
 
     useEffect(() => {
         const el = scrollRef.current;
-        const key = selected?.label?.toLowerCase();
+        const key = selected?.title?.toLowerCase();
         const selectedCard = cardRefs.current[key];
 
         if (el && selectedCard) {
@@ -95,13 +95,13 @@ const CategorySlider = ({ categories, selected, onSelect }) => {
                 <div className="flex gap-4 py-2 w-max">
                     {categories.map((cat) => (
                         <div
-                            key={cat.label}
-                            ref={(el) => (cardRefs.current[cat.label.toLowerCase()] = el)}
+                            key={cat.title}
+                            ref={(el) => (cardRefs.current[cat.title.toLowerCase()] = el)}
                         >
                             <CategoryCard
-                                label={cat.label}
+                                label={cat.title}
                                 icon={cat.icon}
-                                selected={selected === cat.label.toLowerCase()}
+                                selected={selected === cat.title.toLowerCase()}
                                 onClick={() => onSelect(cat)}
                             />
                         </div>
