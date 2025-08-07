@@ -25,7 +25,7 @@ export const RestaurantProvider = ({ slug, children }) => {
                 }
 
                 const validMenu = Array.isArray(data.menu)
-                    ? data.menu.filter(item => item.id && item.title)
+                    ? data.menu.filter(item => item.id && item.title && item.price)
                     : [];
 
                 console.log('Valid menu items:', JSON.stringify(validMenu));

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import PrimaryButton from "./components/PrimaryButton";
 import Header from "./components/Header";
 import { ArrowLeft } from "lucide-react";
+import {useCart} from "./context/CartContext.jsx";
+import {useRestaurant} from "./context/RestaurantContext.jsx";
 
 const OrderPage = () => {
     const [orderType, setOrderType] = useState("restaurant");
@@ -11,6 +13,54 @@ const OrderPage = () => {
     const [peopleCount, setPeopleCount] = useState(1);
     const [comment, setComment] = useState("");
     const navigate = useNavigate();
+    const { totalPrice } = useCart();
+    const {restaurant} = useRestaurant();
+
+
+    const submitOrder = async () => {
+        try {
+            // Здесь заглушки — ты можешь использовать настоящие значения
+            const restaurantID = restaurant.id; // получи из контекста
+            const userID = 1; // получи из Telegram WebApp initData
+            const amount = totalPrice; // рассчитай из корзины
+            const dishes = [1, 2]; // массив ID выбранных блюд
+            const delivery = orderType === "delivery";
+            const info = time === "custom" ? { time: customTime } : { asap: true };
+
+            const body = {
+                restaurantID,
+                userID,
+                amount,
+                note: comment,
+                dishes,
+                delivery,
+                info,
+            };
+
+            console.log("Отправляем данные заказа:", body);
+            const response = await fetch("http://chatmenu.ru/telegram/client/api/orders/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                console.error("Ошибка при создании заказа:", data);
+                alert("Ошибка при оформлении заказа");
+                return;
+            }
+
+            alert("Заказ успешно оформлен!");
+            navigate("/success"); // перенаправь куда нужно
+        } catch (error) {
+            console.error("Ошибка сети:", error);
+            alert("Ошибка соединения с сервером");
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -137,7 +187,7 @@ const OrderPage = () => {
             <div className="fixed bottom-0 left-0 right-0 bg-white px-4 py-3 shadow-md z-10">
                 <div className="max-w-screen-md mx-auto">
                     <PrimaryButton
-                        onClick={() => console.log("Продолжить к оплате")}
+                        onClick={submitOrder}
                         className="w-full"
                     >
                         Оформить заказ
