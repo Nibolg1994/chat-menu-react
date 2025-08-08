@@ -13,7 +13,7 @@ const OrderPage = () => {
     const [peopleCount, setPeopleCount] = useState(1);
     const [comment, setComment] = useState("");
     const navigate = useNavigate();
-    const { totalPrice } = useCart();
+    const { totalPrice, cartItems } = useCart();
     const {restaurant} = useRestaurant();
 
 
@@ -23,7 +23,8 @@ const OrderPage = () => {
             const restaurantID = restaurant.id; // получи из контекста
             const userID = 1; // получи из Telegram WebApp initData
             const amount = totalPrice; // рассчитай из корзины
-            const dishes = [1, 2]; // массив ID выбранных блюд
+            const countPerson = peopleCount
+            const dishes = cartItems// массив  блюд
             const delivery = orderType === "delivery";
             const info = time === "custom" ? { time: customTime } : { asap: true };
 
@@ -32,6 +33,7 @@ const OrderPage = () => {
                 userID,
                 amount,
                 note: comment,
+                countPerson,
                 dishes,
                 delivery,
                 info,
