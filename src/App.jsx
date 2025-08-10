@@ -7,6 +7,9 @@ import CardPage from "./CardPage.jsx"; // <-- импорт MainPage
 import { CartProvider } from "./context/CartContext";
 import ReservationPage from "./ReservationPage.jsx";
 import {RestaurantProvider} from "./context/RestaurantContext.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import OrdersHistory from "./OrdersHistory.jsx";
 
 const App = () => {
     const [slug, setSlug] = useState(null);
@@ -34,7 +37,20 @@ const App = () => {
                 <Route path="/order" element={<OrderPage />} />
                 <Route path="/cart" element={<CardPage />} />
                 <Route path="/reservation" element={<ReservationPage />} />
+                <Route path="/history" element={<OrdersHistory/>} />
             </Routes>
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </CartProvider>
         </RestaurantProvider>
     );

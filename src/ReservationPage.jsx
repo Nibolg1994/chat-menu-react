@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import PrimaryButton from "./components/PrimaryButton";
 import Header from "./components/Header";
 import {useRestaurant} from "./context/RestaurantContext.jsx";
+import { toast } from "react-toastify";
 
 const ReservationPage = () => {
     const navigate = useNavigate();
@@ -12,6 +13,37 @@ const ReservationPage = () => {
     const [peopleCount, setPeopleCount] = useState(1);
     const [comment, setComment] = useState("");
     const {restaurant} = useRestaurant();
+
+    const handleReservation = async () => {
+        try {
+            const payload = {
+                date,
+                time,
+                people_count: parseInt(peopleCount, 10),
+                comment,
+                restaurant_id: restaurant.id
+            };
+
+            const res = await fetch("http://chatmenu.ru/telegram/client/api/reservations/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                toast.success("Столик успешно забронирован!");
+                navigate(-1); // Возвращаемся назад
+            } else {
+                toast.error(data.message || "Ошибка при бронировании");
+            }
+        } catch (error) {
+            toast.error("Произошла ошибка. Попробуйте снова.");
+        }
+    };
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
@@ -92,24 +124,7 @@ const ReservationPage = () => {
             {/* Фиксированная кнопка */}
             <div className="fixed bottom-0 left-0 right-0 bg-gray-100 px-4 pb-4 pt-2 shadow-inner">
                 <PrimaryButton
-                    onClick={async () => {
-                        const res = await fetch('http://chatmenu.ru/telegram/client/api/reservation/create', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                restaurant_id: restaurant.id,
-                                date,
-                                time,
-                                people_count: Number(peopleCount),
-                                comment
-                            })
-                        });
-
-                        const result = await res.json();
-                        console.log(result);
-                    }}
+                    onClick={handleReservation}
                     className="w-full"
                 >
                     Забронировать столик
