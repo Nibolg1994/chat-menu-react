@@ -19,7 +19,6 @@ const OrderPage = () => {
 
     const submitOrder = async () => {
         try {
-            // Здесь заглушки — ты можешь использовать настоящие значения
             const restaurantID = restaurant.id; // получи из контекста
             const userID = 1; // получи из Telegram WebApp initData
             const amount = totalPrice; // рассчитай из корзины
