@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import PrimaryButton from "./components/PrimaryButton";
 import Header from "./components/Header";
+import {useRestaurant} from "./context/RestaurantContext.jsx";
 
 const ReservationPage = () => {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ const ReservationPage = () => {
     const [time, setTime] = useState("");
     const [peopleCount, setPeopleCount] = useState(1);
     const [comment, setComment] = useState("");
+    const {restaurant} = useRestaurant();
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
@@ -90,8 +92,23 @@ const ReservationPage = () => {
             {/* Фиксированная кнопка */}
             <div className="fixed bottom-0 left-0 right-0 bg-gray-100 px-4 pb-4 pt-2 shadow-inner">
                 <PrimaryButton
-                    onClick={() => {
-                        console.log({ date, time, peopleCount, comment });
+                    onClick={async () => {
+                        const res = await fetch('http://chatmenu.ru/telegram/client/api/reservation/create', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                restaurant_id: restaurant.id,
+                                date,
+                                time,
+                                people_count: Number(peopleCount),
+                                comment
+                            })
+                        });
+
+                        const result = await res.json();
+                        console.log(result);
                     }}
                     className="w-full"
                 >
