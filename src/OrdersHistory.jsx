@@ -1,45 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import PrimaryButton from "./components/PrimaryButton";
+import DangerButton from "./components/DangerButton";
 import { FaArrowLeft } from "react-icons/fa";
-import DangerButton from "./components/DangerButton.jsx";
+import {useRestaurant} from "./context/RestaurantContext.jsx";
 
 const OrdersHistory = () => {
     const [activeTab, setActiveTab] = useState("reservations");
+    const [reservations, setReservations] = useState([]);
+    const [orders, setOrders] = useState([]);4
+    const {restaurant} = useRestaurant();
 
-    const reservations = [
-        {
-            id: 1,
-            date: "2025-08-12",
-            time: "19:00",
-            people: 4,
-            status: "Подтверждено",
-            comment: "Столик у окна",
-        },
-        {
-            id: 2,
-            date: "2025-08-15",
-            time: "20:30",
-            people: 2,
-            status: "Ожидает подтверждения",
-            comment: "",
-        },
-    ];
-
-    const orders = [
-        {
-            id: 101,
-            date: "2025-08-08",
-            total: 1250,
-            status: "В обработке",
-        },
-        {
-            id: 102,
-            date: "2025-08-05",
-            total: 870,
-            status: "Доставлено",
-        },
-    ];
+    useEffect(() => {
+        if (!restaurant || !restaurant.id) return;
+        if (activeTab === "reservations") {
+            fetch(`http://chatmenu.ru/telegram/client/api/reservations/list?restaurant_id=${restaurant.id}`)
+                .then(res => res.json())
+                .then(data => setReservations(Array.isArray(data?.reservations) ? data.reservations : []));
+        } else {
+            fetch(`http://chatmenu.ru/telegram/client/api/orders/list?restaurant_id=${restaurant.id}`)
+                .then(res => res.json())
+                .then(data => setOrders(Array.isArray(data?.orders) ? data.orders : []));
+        }
+    }, [activeTab, restaurant?.id]);
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
@@ -49,12 +32,10 @@ const OrdersHistory = () => {
                 workingHours="10:00–22:00"
             />
 
-            {/* Назад + заголовок */}
             <div className="flex items-center gap-3 px-4 py-4 bg-white shadow-sm">
                 <button
                     onClick={() => window.history.back()}
                     className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition"
-                    aria-label="Назад"
                 >
                     <FaArrowLeft className="text-gray-600" />
                 </button>
@@ -63,7 +44,6 @@ const OrdersHistory = () => {
                 </h1>
             </div>
 
-            {/* Переключатель вкладок */}
             <div className="flex bg-white border-b border-gray-200">
                 <button
                     className={`flex-1 py-3 font-medium ${
@@ -87,14 +67,10 @@ const OrdersHistory = () => {
                 </button>
             </div>
 
-            {/* Список */}
             <div className="flex-1 overflow-auto p-4 space-y-4">
                 {activeTab === "reservations" &&
                     reservations.map((res) => (
-                        <div
-                            key={res.id}
-                            className="bg-white p-4 rounded-lg shadow"
-                        >
+                        <div key={res.id} className="bg-white p-4 rounded-lg shadow">
                             <div className="flex justify-between mb-2">
                                 <span className="text-sm text-gray-500">
                                     {res.date} в {res.time}
@@ -118,40 +94,42 @@ const OrdersHistory = () => {
                                 </div>
                             )}
                             <div className="flex gap-2 mt-3">
-                                <PrimaryButton className="flex-1">
-                                    Изменить
-                                </PrimaryButton>
-                                <DangerButton className="flex-1">
-                                    Отменить
-                                </DangerButton>
+                                <PrimaryButton className="flex-1">Изменить</PrimaryButton>
+                                <DangerButton className="flex-1">Отменить</DangerButton>
                             </div>
                         </div>
                     ))}
 
                 {activeTab === "orders" &&
                     orders.map((order) => (
-                        <div
-                            key={order.id}
-                            className="bg-white p-4 rounded-lg shadow"
-                        >
+                        <div key={order.id} className="bg-white p-4 rounded-lg shadow">
                             <div className="flex justify-between mb-2">
                                 <span className="text-sm text-gray-500">
                                     Заказ #{order.id} — {order.date}
                                 </span>
                                 <span
                                     className={`text-sm font-medium ${
-                                        order.status === "Доставлено"
+                                        order.status === 4
                                             ? "text-green-600"
                                             : "text-yellow-600"
                                     }`}
                                 >
-                                    {order.status}
+                                    {order.statusLabel}
                                 </span>
                             </div>
                             <div className="text-gray-800 font-medium">
                                 Сумма: {order.total} ₽
                             </div>
-                            <PrimaryButton className="mt-3 w-full">
+                            <PrimaryButton
+                                className="mt-3 w-full"
+                                onClick={() => {
+                                    fetch(`/api/orders/${order.id}`)
+                                        .then(res => res.json())
+                                        .then(details => {
+                                            console.log("Детали заказа:", details);
+                                        });
+                                }}
+                            >
                                 Подробнее
                             </PrimaryButton>
                         </div>
