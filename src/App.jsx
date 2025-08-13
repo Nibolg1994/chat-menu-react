@@ -10,6 +10,7 @@ import {RestaurantProvider} from "./context/RestaurantContext.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OrdersHistory from "./OrdersHistory.jsx";
+import OrderViewPage from "./OrderViewPage.jsx";
 
 const App = () => {
     const [slug, setSlug] = useState(null);
@@ -38,6 +39,7 @@ const App = () => {
                 <Route path="/cart" element={<CardPage />} />
                 <Route path="/reservation" element={<ReservationPage />} />
                 <Route path="/history" element={<OrdersHistory/>} />
+                <Route path="/order/:orderId" element={<OrderViewPage/>} />
             </Routes>
             <ToastContainer
                 position="top-center"

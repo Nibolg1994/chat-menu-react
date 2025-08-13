@@ -4,12 +4,14 @@ import PrimaryButton from "./components/PrimaryButton";
 import DangerButton from "./components/DangerButton";
 import { FaArrowLeft } from "react-icons/fa";
 import {useRestaurant} from "./context/RestaurantContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 const OrdersHistory = () => {
     const [activeTab, setActiveTab] = useState("reservations");
     const [reservations, setReservations] = useState([]);
     const [orders, setOrders] = useState([]);4
     const {restaurant} = useRestaurant();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!restaurant || !restaurant.id) return;
@@ -123,11 +125,8 @@ const OrdersHistory = () => {
                             <PrimaryButton
                                 className="mt-3 w-full"
                                 onClick={() => {
-                                    fetch(`/api/orders/${order.id}`)
-                                        .then(res => res.json())
-                                        .then(details => {
-                                            console.log("Детали заказа:", details);
-                                        });
+                                    console.log(`/order/${order.id}`);
+                                    navigate(`/order/${order.id}`)
                                 }}
                             >
                                 Подробнее
