@@ -5,6 +5,7 @@ import DangerButton from "./components/DangerButton";
 import { FaArrowLeft } from "react-icons/fa";
 import {useRestaurant} from "./context/RestaurantContext.jsx";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const OrdersHistory = () => {
     const [activeTab, setActiveTab] = useState("reservations");
@@ -25,6 +26,28 @@ const OrdersHistory = () => {
                 .then(data => setOrders(Array.isArray(data?.orders) ? data.orders : []));
         }
     }, [activeTab, restaurant?.id]);
+
+    const cancelReservation = async (reservationId) => {
+        try {
+            const res = await fetch(`http://chatmenu.ru/telegram/client/api/reservations/${reservationId}/cancel`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                setReservations(reservations.filter(res => res.id !== reservationId));
+                toast.success("Бронирование успешно отменено");
+            } else {
+                toast.error(data.message || "Ошибка при отмене бронирования");
+            }
+        } catch (error) {
+            toast.error("Произошла ошибка. Попробуйте снова.");
+        }
+    }
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
@@ -88,7 +111,7 @@ const OrdersHistory = () => {
                                 </span>
                             </div>
                             <div className="text-gray-800">
-                                {res.people} персоны
+                                Количество персон: {res.people_count}
                             </div>
                             {res.comment && (
                                 <div className="text-sm text-gray-600 mt-1">
@@ -96,8 +119,12 @@ const OrdersHistory = () => {
                                 </div>
                             )}
                             <div className="flex gap-2 mt-3">
-                                <PrimaryButton className="flex-1">Изменить</PrimaryButton>
-                                <DangerButton className="flex-1">Отменить</DangerButton>
+                                <PrimaryButton className="flex-1"  onClick={() => navigate(`/reservation/${res.id}`)}>
+                                    Изменить
+                                </PrimaryButton>
+                                <DangerButton className="flex-1" onClick={cancelReservation}>
+                                    Отменить
+                                </DangerButton>
                             </div>
                         </div>
                     ))}

@@ -20,6 +20,7 @@ const ReservationPage = () => {
                 date,
                 time,
                 people_count: parseInt(peopleCount, 10),
+                user_id: 1, // Здесь нужно получить ID пользователя из Telegram WebApp initData
                 comment,
                 restaurant_id: restaurant.id
             };

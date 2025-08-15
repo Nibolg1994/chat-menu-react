@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OrdersHistory from "./OrdersHistory.jsx";
 import OrderViewPage from "./OrderViewPage.jsx";
+import ReservationEditPage from "./ReservationEditPage.jsx";
 
 const App = () => {
     const [slug, setSlug] = useState(null);
@@ -40,6 +41,7 @@ const App = () => {
                 <Route path="/reservation" element={<ReservationPage />} />
                 <Route path="/history" element={<OrdersHistory/>} />
                 <Route path="/order/:orderId" element={<OrderViewPage/>} />
+                <Route path="/reservation/:reservationId" element={<ReservationEditPage/>} />
             </Routes>
             <ToastContainer
                 position="top-center"
