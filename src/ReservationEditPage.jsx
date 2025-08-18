@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react"; // или твоя иконка, ес�
 import { toast } from "react-toastify";
 
 const ReservationEditPage = () => {
-    const { id } = useParams();
+    const { reservationId } = useParams();
     const navigate = useNavigate();
 
     const [reservation, setReservation] = useState(null);
@@ -14,7 +14,7 @@ const ReservationEditPage = () => {
     const [comment, setComment] = useState("");
 
     useEffect(() => {
-        fetch(`http://chatmenu.ru/telegram/client/api/reservations/${id}`)
+        fetch(`http://chatmenu.ru/telegram/client/api/reservations/${reservationId}/view`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -25,15 +25,16 @@ const ReservationEditPage = () => {
                     toast.error("Не удалось загрузить данные брони");
                 }
             });
-    }, [id]);
+    }, [reservationId]);
 
     const handleSave = async () => {
-        const res = await fetch(`http://chatmenu.ru/telegram/client/api/reservations/${id}/edit`, {
+        const res = await fetch(`http://chatmenu.ru/telegram/client/api/reservations/${reservationId}/edit`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                user_id: 1, // Здесь нужно использовать реальный ID пользователя
                 people_count: peopleCount,
                 comment
             })

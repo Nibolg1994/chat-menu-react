@@ -29,17 +29,27 @@ const OrdersHistory = () => {
 
     const cancelReservation = async (reservationId) => {
         try {
-            const res = await fetch(`http://chatmenu.ru/telegram/client/api/reservations/${reservationId}/cancel`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const res = await fetch(
+                `http://chatmenu.ru/telegram/client/api/reservations/${reservationId}/cancel`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
             const data = await res.json();
+            console.log("Отмена бронирования:", data);
 
             if (data.success) {
-                setReservations(reservations.filter(res => res.id !== reservationId));
+                setReservations(prev =>
+                    prev.map(res =>
+                        res.id === reservationId
+                            ? { ...res, status: "Отменено" }
+                            : res
+                    )
+                );
                 toast.success("Бронирование успешно отменено");
             } else {
                 toast.error(data.message || "Ошибка при отмене бронирования");
@@ -47,7 +57,7 @@ const OrdersHistory = () => {
         } catch (error) {
             toast.error("Произошла ошибка. Попробуйте снова.");
         }
-    }
+    };
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
@@ -118,14 +128,19 @@ const OrdersHistory = () => {
                                     {res.comment}
                                 </div>
                             )}
-                            <div className="flex gap-2 mt-3">
-                                <PrimaryButton className="flex-1"  onClick={() => navigate(`/reservation/${res.id}`)}>
-                                    Изменить
-                                </PrimaryButton>
-                                <DangerButton className="flex-1" onClick={cancelReservation}>
-                                    Отменить
-                                </DangerButton>
-                            </div>
+                            {res.status !== "Отменено" && (
+                                <div className="flex gap-2 mt-3">
+                                    <PrimaryButton className="flex-1"
+                                                   onClick={() => navigate(`/reservation/${res.id}`)}>
+                                        Изменить
+                                    </PrimaryButton>
+                                    {res.status !== "Подтверждено" && (
+                                        <DangerButton className="flex-1" onClick={() => cancelReservation(res.id)}>
+                                            Отменить
+                                        </DangerButton>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     ))}
 
